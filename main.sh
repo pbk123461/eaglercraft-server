@@ -7,8 +7,8 @@ setserver="true"
 syncweb="true"
 syncjars="true"
 #server name and motd -- DO NOT USE BACKTICKS (`) within it!! -- stuff WONT work if you DO!! ALSO do not use "${anything}" UNLESS YOU KNOW WHAT YOU ARE DOING!!
-srvname="Your Minecraft Server"
-srvmotd="Minecraft Server"
+srvname="wcmssmp"
+srvmotd="wcmssmp"
 
 
 #DANGER!! setting the following to "true" will redownload the bukkit server! only change if you know what you are doing!
@@ -18,7 +18,7 @@ emergbukkit="false"
 
 #~#       this code was smashed together by ayunami2000       #~#
 
-eagurl="https://raw.githubusercontent.com/LAX1DUDE/eaglercraft/main/stable-download/stable-download_repl.zip"
+eagurl="https://raw.githubusercontent.com/FireDevilX/eaglercraft/main/stable-download/stable-download_repl.zip"
 
 echo ensuring old server process is truly closed...
 nginx -s stop -c ~/$REPL_SLUG/nginx.conf -g 'daemon off; pid /tmp/nginx/nginx.pid;' -p /tmp/nginx -e /tmp/nginx/error.log
@@ -36,8 +36,8 @@ echo checking if file still works...
 status_code=$(curl -L --write-out %{http_code} --silent --output /dev/null "$eagurl")
 
 if [[ "$status_code" -ne 200 ]] ; then
-  syncweb="false"
-  syncjars="false"
+  syncweb="true"
+  syncjars="true"
   echo "
 
 
@@ -75,7 +75,8 @@ else
       rm -rf java/bungee_command/*
       cp -r /tmp/new/java/bungee_command/. ./java/bungee_command/
       echo ensuring that bungeecord is hosting on the correct port...
-      sed -i 's/host: 0\.0\.0\.0:[0-9]\+/host: 0.0.0.0:1/' java/bungee_command/config.yml
+      sed -i 's/host: 0\.0\.0\.0:[0-9]\+/host: 127.0.0.1:1/' java/bungee_command/config.yml
+      sed -i 's/^server-ip=$/server-ip=127.0.0.1/' java/bukkit_command/server.properties
     fi
     echo updating bukkit server...
     if [ "$emergbukkit" = "true" ]; then
