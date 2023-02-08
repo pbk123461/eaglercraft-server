@@ -1,4 +1,4 @@
-# replit eaglercraft server
+# replit wcms server
 
 ### ty [Byte#9476](https://replit.com/@ant-7802) for fixing the forwarding issue!!
 
